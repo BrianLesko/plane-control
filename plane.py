@@ -22,14 +22,13 @@ def main():
     IP = '172.20.10.13'
     my_socket.bind((IP, 12345))
 
+    print("Waiting for commands...")
     while True:
         # Receive UDP Signal
         data, addr = my_socket.recvfrom(1024) # buffer size is 1024 bytes
         if data:
             new_data = data.decode("utf-8")
             print("received: %s" % new_data)
-        else:
-            print("No data received")
         #except Exception as e:
         #    print("Error occurred while receiving the UDP signal.")
 
