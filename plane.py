@@ -28,6 +28,8 @@ def main():
         if data:
             new_data = data.decode("utf-8")
             print("received: %s" % new_data)
+        else:
+            print("No data received")
         #except Exception as e:
         #    print("Error occurred while receiving the UDP signal.")
 
