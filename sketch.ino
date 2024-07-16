@@ -1,33 +1,29 @@
 // Brian Lesko 
-// Controls the steering for 3 servos and the throttle for an brushless DC motor
+// Controls the steering for 2 servos and the throttle for a brushless DC motor
 
 #include <Servo.h>
 
 //create servo objects
-Servo steering; 
 Servo throttle;
-Servo rearServo1;
-Servo rearServo2;
+Servo left;
+Servo right;
 
 int ledPin = 13;
 int center = 95;
-int right = 55;
-int left = 130;
+//int right = 55;
+//int left = 130;
 
 void setup() {
   Serial.begin(9600);
   pinMode(9, OUTPUT);
   pinMode(10, OUTPUT);
  
-  steering.attach(9);   // attach steering servo to pin 9
   throttle.attach(10);  // attach ESC to pin 10
-
-  rearServo1.attach(7); // Rear steering servos
-  rearServo2.attach(8);
+  left.attach(7); // left servo on pin 7
+  right.attach(8); // right servo on pin 8
  
-  steering.write(95);   // centers steering
-  rearServo1.write(95);
-  rearServo2.write(95);
+  left.write(95); //centers the servos
+  right.write(95);
   throttle.write(90);   // sets mid throttle
 }
 
@@ -52,11 +48,8 @@ void loop() {
     } 
     else if (incomingMessage.startsWith("servo:")) {
       int angle = incomingMessage.substring(6).toInt();
-      steering.write(angle);
-      if (previousPower < 120) {
-        rearServo1.write(angle);
-        rearServo2.write(angle);
-      }
+      left.write(-angle);
+      right.write(angle);
     }
   }
 }

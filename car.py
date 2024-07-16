@@ -19,7 +19,7 @@ def main():
 
     # Set up the UDP connection
     my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    IP = '172.20.10.3'
+    IP = '172.20.10.13'
     my_socket.bind((IP, 12345))
 
     while True:
