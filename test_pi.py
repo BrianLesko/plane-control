@@ -16,15 +16,18 @@ if "my_arduino" not in st.session_state:
 
 if "my_arduino" in st.session_state:
     power = st.slider("Power", min_value=0, max_value=100, value=0)
-    angle = st.slider("Angle", min_value=0, max_value=180, value=95)
+    left = st.slider("Left Servo", min_value=40, max_value=140, value=95)
+    right = st.slider("Right Servo", min_value=40, max_value=140, value=95)
 
     throttle = 'throttle:'+str(power)
-    steering = 'servo:'+str(angle)
+    Left = 'left:'+str(left)
+    Right = 'right:'+str(right)
 
     # Send Serial Signal 
     try:
         st.session_state.my_arduino.send(throttle)
-        st.session_state.my_arduino.send(steering)
+        st.session_state.my_arduino.send(Left)
+        st.session_state.my_arduino.send(Right)
     except Exception as e:
         st.write("Error occurred while sending the serial signal.")
         st.write(e)

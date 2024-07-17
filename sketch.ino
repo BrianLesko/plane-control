@@ -46,9 +46,12 @@ void loop() {
       throttle.write(power);
       previousPower = power;
     } 
-    else if (incomingMessage.startsWith("servo:")) {
+    else if (incomingMessage.startsWith("left:")) {
       int angle = incomingMessage.substring(6).toInt();
-      left.write(-angle);
+      left.write(angle);
+    }
+    else if (incomingMessage.startsWith("right:")) {
+      int angle = incomingMessage.substring(6).toInt();
       right.write(angle);
     }
   }
