@@ -9,17 +9,16 @@ port = '/dev/ttyACM0'
 try: 
     BAUD = 9600
     my_arduino = ard.arduino(port,BAUD,.1)
-    print(f"Connection to {port} successful")
+    st.write(f"Connection to {port} successful")
 except Exception as e:
-    print("Could not connect to arduino")
+    st.write("Could not connect to arduino")
 
     throttle = 'throttle:'+str(power)
     steering = 'servo:'+str(angle)
 
-while True:
-    # Send Serial Signal 
-    try:
-        my_arduino.send(throttle)
-        my_arduino.send(steering)
-    except Exception as e:
-        print("Error occurred while sending the serial signal.")
+# Send Serial Signal 
+try:
+    my_arduino.send(throttle)
+    my_arduino.send(steering)
+except Exception as e:
+    st.write("Error occurred while sending the serial signal.")
