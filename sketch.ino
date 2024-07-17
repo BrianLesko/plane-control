@@ -47,7 +47,7 @@ void loop() {
       previousPower = power;
     } 
     else if (incomingMessage.startsWith("left:")) {
-      int angle = incomingMessage.substring(6).toInt();
+      int angle = incomingMessage.substring(5).toInt();
       left.write(angle);
     }
     else if (incomingMessage.startsWith("right:")) {
