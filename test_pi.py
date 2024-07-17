@@ -9,6 +9,7 @@ if "my_arduino" not in st.session_state:
         BAUD = 9600
         my_arduino = ard.arduino(port,BAUD,.1)
         st.write(f"Connection to {port} successful")
+        st.rerun()
     except Exception as e:
         st.write("Could not connect to arduino")
 
