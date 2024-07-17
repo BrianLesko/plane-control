@@ -22,3 +22,4 @@ try:
     my_arduino.send(steering)
 except Exception as e:
     st.write("Error occurred while sending the serial signal.")
+    st.write(e)
