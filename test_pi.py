@@ -14,7 +14,6 @@ if "my_arduino" not in st.session_state:
     except Exception as e:
         st.write("Could not connect to arduino")
 else:
-    my_arduino = st.session_state.my_arduino
     st.write(f"Connection to arduino successful")
 
 throttle = 'throttle:'+str(power)
@@ -22,8 +21,8 @@ steering = 'servo:'+str(angle)
 
 # Send Serial Signal 
 try:
-    my_arduino.send(throttle)
-    my_arduino.send(steering)
+    st.session_state.my_arduino.send(throttle)
+    st.session_state.my_arduino.send(steering)
 except Exception as e:
     st.write("Error occurred while sending the serial signal.")
     st.write(e)
