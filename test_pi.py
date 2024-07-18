@@ -15,7 +15,7 @@ if "my_arduino" not in st.session_state:
         st.write("Could not connect to arduino")
 
 if "my_arduino" in st.session_state:
-    power = st.slider("Power", min_value=0, max_value=100, value=0)
+    power = st.slider("Power", min_value=1000, max_value=2000, value=0)
     left = st.slider("Left Servo", min_value=40, max_value=140, value=95)
     right = st.slider("Right Servo", min_value=40, max_value=140, value=95)
 
