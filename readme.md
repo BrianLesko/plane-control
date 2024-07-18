@@ -1,6 +1,6 @@
 
-# Mobile robot
-All the code needed to drive a mobile robot using a PS5 remote
+# Raspberry pi powered Airplane 
+Control the airplane throttle and steering servos over the internet.
 
 &nbsp;
 
@@ -27,7 +27,7 @@ This code uses the following libraries:
 ## Usage
 1. clone this repository
 ```
-git clone https://github.com/BrianLesko/dualsense-car-control
+git clone ...
 ```
 2. The base station and robot computers must be on the same network. Set up each device with a static IP
 2. Change the robot IP in 'app.py' and 'car.py' you can also change the port which is '12345'

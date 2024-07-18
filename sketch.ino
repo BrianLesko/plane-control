@@ -15,19 +15,22 @@ int center = 95;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(9, OUTPUT);
   pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(12, OUTPUT);
  
-  throttle.attach(10);  // attach ESC to pin 10
-  left.attach(7); // left servo on pin 7
-  right.attach(8); // right servo on pin 8
+  throttle.attach(12,1000,2000);  // attach ESC to pin 10 and set the min and max pulse width micro seconds
+  left.attach(11); // left servo on pin 7
+  right.attach(10); // right servo on pin 8
  
   left.write(95); //centers the servos
   right.write(95);
-  throttle.write(90);   // sets mid throttle
+  //arm the ESC
+  throttle.writeMicroseconds(2000); // max throttle
+  delay(2000);  // Wait for 2 seconds
+  throttle.writeMicroseconds(1000);  // minimum throttle
+  delay(2000);  // Wait for 2 seconds
 }
-
-int previousPower = 0;
 
 void loop() {
   if (Serial.available() > 0) {
@@ -35,16 +38,7 @@ void loop() {
 
     if (incomingMessage.startsWith("throttle:")) {
       int power = incomingMessage.substring(9).toInt();
-      // If the new power is significantly lower than the previous power, decrease it gradually
-      if (power < previousPower - 2) { 
-        power = previousPower - 2; 
-      }
-      // If the new power is significantly higher than the previous power, increase it gradually
-      else if (power > previousPower + 2) { 
-        power = previousPower + 2;
-      }
       throttle.write(power);
-      previousPower = power;
     } 
     else if (incomingMessage.startsWith("left:")) {
       int angle = incomingMessage.substring(5).toInt();
