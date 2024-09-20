@@ -68,21 +68,18 @@ def main():
         angle = 95
         if abs(ds.RX) > 0.1:
             with Status: st.write(ds.RX)
-            angle = int(np.interp(ds.RX,[-180,180],[45,145]))
+            angle = int(np.interp(ds.RX,[-180,180],[275,1200]))
 
         # Power Calibration
-        power = int(np.interp(power,[0,255],[85,105])) # calibrated at 
+        power = int(np.interp(power,[0,255],[275,1200])) # calibrated at 
         with Sending: st.write(f"Sending: {power}")
 
-        throttle = 'throttle:'+str(power)
-        steering = 'servo:'+str(angle)
         # Send the command via UDP/IP
         with Message: st.write("Sending UDP Signal")
         try:
             if 'client' not in st.session_state:
                 st.session_state.client = eth.ethernet("client", IP, 12345)
-            st.session_state.client.s.sendto(throttle.encode(), (IP, 12345))
-            st.session_state.client.s.sendto(steering.encode(), (IP, 12345))
+            st.session_state.client.s.sendto(f'pwm1={angle};pwm2={angle};pwm3={power}'.encode(), (IP, 12345))
         except Exception as e:
             with Message: 
                 st.write(e)
