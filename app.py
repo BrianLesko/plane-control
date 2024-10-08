@@ -25,6 +25,8 @@ def main():
     Sending = st.empty()
     Incoming = st.empty()
     Status = st.empty()
+    RX = st.empty()
+    RY = st.empty()
     
     # Setting up the dualsense controller connection
     vendorID, productID = int("0x054C", 16), int("0x0CE6", 16)
@@ -67,8 +69,11 @@ def main():
         # Joystick control 
         angle = 95
         if abs(ds.RX) > 0.1:
-            with Status: st.write(ds.RX)
+            with RX: st.write(f"RX: {ds.RX}")
             angle = int(np.interp(ds.RX,[-180,180],[275,1200]))
+        if abs(ds.RY) > 0.1:
+            angle = angle + ds.RY
+            with RY: st.write(f"RY: {ds.RY}")
 
         # Power Calibration
         power = int(np.interp(power,[0,255],[275,1200])) # calibrated at 
@@ -79,7 +84,7 @@ def main():
         try:
             if 'client' not in st.session_state:
                 st.session_state.client = eth.ethernet("client", IP, 12345)
-            st.session_state.client.s.sendto(f'pwm1={angle};pwm2={angle};pwm3={power}'.encode(), (IP, 12345))
+            st.session_state.client.s.sendto(f'pwm1={angle};pwm2={angle};pwm3={power};'.encode(), (IP, 12345))
         except Exception as e:
             with Message: 
                 st.write(e)
