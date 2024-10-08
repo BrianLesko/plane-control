@@ -44,7 +44,7 @@ def main():
     # Control Loop
     history = []
     messages = []
-    IP = '172.20.10.3'
+    IP = '10.42.0.1'
     Trigger = st.empty()
     while True:
         with Status: st.write("Reading Controller")
