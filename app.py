@@ -55,7 +55,7 @@ def main():
         ds.updateThumbsticks()
 
         # Button Control
-        power = 90
+        power = 15
         if abs(ds.L2) > 1:
             power = -ds.L2 
         if abs(ds.R2) > 1:
@@ -68,11 +68,12 @@ def main():
 
         # Joystick control 
         angle = 95
+        elev = 0
         if abs(ds.RX) > 0.1:
             with RX: st.write(f"RX: {ds.RX}")
             angle = int(np.interp(ds.RX,[-180,180],[275,1200]))
         if abs(ds.RY) > 0.1:
-            angle = angle + ds.RY
+            elev = ds.RY
             with RY: st.write(f"RY: {ds.RY}")
 
         # Power Calibration
@@ -84,7 +85,7 @@ def main():
         try:
             if 'client' not in st.session_state:
                 st.session_state.client = eth.ethernet("client", IP, 12345)
-            st.session_state.client.s.sendto(f'pwm1={angle};pwm2={angle};pwm3={power};'.encode(), (IP, 12345))
+            st.session_state.client.s.sendto(f'pwm1={angle+elev*2};pwm2={angle-elev*3+60};pwm3={power};'.encode(), (IP, 12345))
         except Exception as e:
             with Message: 
                 st.write(e)
